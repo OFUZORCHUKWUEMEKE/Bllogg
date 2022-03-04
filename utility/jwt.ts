@@ -4,9 +4,9 @@ import { AuthPayload } from '../dto'
 
 
 export const GenerateSignature = async(user:AuthPayload) =>{
-   return  jwt.sign({id: user._id,username:user.username,email:user.email }, secret, { expiresIn: '5d' })
+   return  jwt.sign({_id: user._id,username:user.username,email:user.email,isAdmin:user.isAdmin }, secret, { expiresIn: '5d' })
 }
 
-const DecodeToken = async()=>{
-    
+export const DecodeToken = async(token:string)=>{
+  return  jwt.verify(token.split(" ")[1],secret) as AuthPayload
 }

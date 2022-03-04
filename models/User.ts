@@ -10,11 +10,12 @@ interface UserDoc extends Document{
     github:string
     twitter:string
     facebook:string
-    posts:[string]
+    posts:[]
     department:string
     faculty:string
     level:string
     access:string
+    followers:[string]
 }
 
 
@@ -31,11 +32,14 @@ const UserSchema = new Schema({
     department:{type:String},
     level:{type:String},
     faculty:{type:String},
+    isAdmin:{type:Boolean ,default:false},
     string:{type:String},
     access:{type:String},
-    posts:[{type:Schema.Types.ObjectId,ref:'Post'}]
+    posts:[{type:Schema.Types.ObjectId,ref:'Post'}],
+    // posts:[],
+    followers:[{type:Schema.Types.ObjectId,ref:'Post'}]
 },{timestamps:true})
 
-const User = model<UserDoc>('User',UserSchema)
+const User = model('User',UserSchema)
 
 export {User}

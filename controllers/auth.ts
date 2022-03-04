@@ -21,7 +21,7 @@ export const Login = async (req:Request,res:Response,next:NextFunction) => {
      !access && res.status(400).json({message:'invalid password'})
      
      if(access){
-         const token = await GenerateSignature({_id:user._id,username:user.username,email:user.email}) 
+         const token = await GenerateSignature({_id:user._id,username:user.username,email:user.email,isAdmin:user.isAdmin}) 
          
          user.access = token
          await user.save()
@@ -46,8 +46,8 @@ export const Register = async (req:Request,res:Response,next:NextFunction)=>{
 
   const hashed = await HashedPassword(password,salt)
 
-  const newUser = await User.create({email,password:hashed,username,twitter:'',instagram:'',github:'',linkedIn:'',hobbies:'',about:'',posts:[],level:'',faculty:'',department:'',access:''})
-
+  const newUser = await User.create({email,password:hashed,username,twitter:'',instagram:'',github:'',linkedIn:'',hobbies:'',about:'',posts:[],level:'',faculty:'',department:'',access:'',followers:[]})
+   console.log(newUser)
    return res.status(200).json(newUser)
 } 
 
